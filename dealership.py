@@ -101,10 +101,12 @@ class Dealership(object):
             dealership.process_rental()
             proceed = input('continue? y/n ')
         data = dealership.get_rental_status()
-        with open("output.csv", "w", newline="",  encoding='utf-8') as f:
-            writer = csv.writer(f)
-            writer.writerows(data)
-            f.close()
+        answer = input('would you like to save changes made? y/n ')
+        if answer == 'y':
+            with open("output.csv", "w", newline="",  encoding='utf-8') as f:
+                writer = csv.writer(f)
+                writer.writerows(data)
+                f.close()
 
 if __name__ == '__main__':
    Dealership.main()
