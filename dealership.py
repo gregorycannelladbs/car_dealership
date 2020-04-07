@@ -1,4 +1,5 @@
 from car import Car, ElectricCar, PetrolCar, DieselCar, HybridCar
+import csv
 
 class Dealership(object):
 
@@ -23,7 +24,7 @@ class Dealership(object):
            self.hybrid_cars.append(HybridCar())
 
     def stock_count(self):
-        print('petrol cars in stock ' + str(len(self.petrol_cars)))
+        print('petrol cars in stock '+ str(len(self.petrol_cars)))
         print('electric cars in stock ' + str(len(self.electric_cars)))
         print('Diesel cars in stock ' + str(len(self.diesel_cars)))
         print('Hybrid cars in stock ' + str(len(self.hybrid_cars)))
@@ -78,14 +79,32 @@ class Dealership(object):
         
         print("")
         self.stock_count()
-
-def main():
-    dealership = Dealership()
-    dealership.create_current_stock()
-    proceed = 'y'
-    while proceed == 'y':
-        dealership.process_rental()
-        proceed = input('continue? y/n')
+        
+    def get_rental_status(self):
+        rental_status = [
+                ['electric_cars', len(self.electric_cars)],
+                ['petrol_cars', len(self.petrol_cars)], 
+                ['diesel_cars', len(self.diesel_cars)],
+                ['hybrid_cars', len(self.hybrid_cars)], 
+                ['rented_electric_cars', len(self.rented_electric_cars)], 
+                ['rented_petrol_cars', len(self.rented_petrol_cars)],
+                ['rented_diesel_cars', len(self.rented_diesel_cars)], 
+                ['rented_hybrid_cars', len(self.rented_hybrid_cars)]
+                ]
+        return rental_status
+        
+    def main():
+        dealership = Dealership()
+        dealership.create_current_stock()
+        proceed = 'y'
+        while proceed == 'y':
+            dealership.process_rental()
+            proceed = input('continue? y/n ')
+        data = dealership.get_rental_status()
+        with open("output.csv", "w", newline="",  encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerows(data)
+            f.close()
 
 if __name__ == '__main__':
-    main()
+   Dealership.main()
