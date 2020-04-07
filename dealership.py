@@ -79,9 +79,13 @@ class Dealership(object):
         print("")
         self.stock_count()
 
-dealership = Dealership()
-dealership.create_current_stock()
-proceed = 'y'
-while proceed == 'y':
-    dealership.process_rental()
-    proceed = input('continue? y/n')
+def main():
+    dealership = Dealership()
+    dealership.create_current_stock()
+    proceed = 'y'
+    while proceed == 'y':
+        dealership.process_rental()
+        proceed = input('continue? y/n')
+
+if __name__ == '__main__':
+    main()
