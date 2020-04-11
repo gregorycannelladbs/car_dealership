@@ -8,6 +8,8 @@ class Car(object):
         self.__make = ''
         self.__mileage = 0
         self.engineSize = ''
+        self.__status = 'in stock'
+        self.__RegNumber = ''
 
     def getColour(self):
         return self.__colour
@@ -17,6 +19,15 @@ class Car(object):
 
     def getMileage(self):
         return self.__mileage
+    
+    def getEngineSize(self):
+        return self.__engineSize
+    
+    def getStatus(self):
+        return self.__status
+
+    def getRegNumber(self):
+        return self.__reg_number
 
     def setColour(self, colour):
         self.__colour = colour
@@ -26,7 +37,16 @@ class Car(object):
 
     def setMileage(self, mileage):
         self.__mileage = mileage
+        
+    def setEngineSize(self, engineSize):
+        self.__engineSize = engineSize
+        
+    def setStatus(self, status):
+        self.__status = status
 
+    def setRegNumber(self, RegNumber):
+        self.__RegNumber = RegNumber
+        
     def paint(self, colour):
         self.__colour = colour
         return self.__colour
