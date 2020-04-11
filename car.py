@@ -4,18 +4,18 @@ class Car(object):
     # implement the car object.
     
     def __init__(self):
-        self.__colour = ''
         self.__make = ''
+        self.__colour = ''
         self.__mileage = 0
-        self.engineSize = ''
+        self.__engineSize = 0
         self.__status = 'in stock'
-        self.__RegNumber = ''
-
-    def getColour(self):
-        return self.__colour
+        self.__reg_number = ''
 
     def getMake(self):
         return self.__make
+    
+    def getColour(self):
+        return self.__colour
 
     def getMileage(self):
         return self.__mileage
@@ -29,11 +29,11 @@ class Car(object):
     def getRegNumber(self):
         return self.__reg_number
 
-    def setColour(self, colour):
-        self.__colour = colour
-
     def setMake(self, make):
         self.__make = make
+        
+    def setColour(self, colour):
+        self.__colour = colour
 
     def setMileage(self, mileage):
         self.__mileage = mileage
@@ -44,8 +44,8 @@ class Car(object):
     def setStatus(self, status):
         self.__status = status
 
-    def setRegNumber(self, RegNumber):
-        self.__RegNumber = RegNumber
+    def setRegNumber(self, reg_number):
+        self.__reg_number = reg_number
         
     def paint(self, colour):
         self.__colour = colour
