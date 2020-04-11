@@ -1,5 +1,9 @@
 from car import Car, ElectricCar, PetrolCar, DieselCar, HybridCar
 import csv
+import random
+import string
+
+#test_car = PetrolCar('black', 'peugeot', 3000, 1.4, 'in stock', '07LH1559', 5)
 
 class Dealership(object):
 
@@ -14,15 +18,32 @@ class Dealership(object):
         self.rented_hybrid_cars = []
 
     def create_current_stock(self):
+        colours = ['blue', 'white', 'red', 'black', 'green'] * 8
+        makes = ['Jaguar', 'lamborghini', 'Ferrari', 'mustang'] * 8
+        engine_sizes = [3, 3.5, 4, 4.5, 4.7] * 8
+        reg_numbers = [''.join(random.choices(string.ascii_uppercase + string.digits, k=8)) for i in range(40)]
+        numer_cylinders = [6, 8] * 9
+
         for i in range(6):
            self.electric_cars.append(ElectricCar())
+           self.electric_cars[i].setColour(colours.pop())
+           self.electric_cars[i].setMake(makes.pop())
+           self.electric_cars[i].setMake(engine_sizes.pop())
+           self.electric_cars[i].setRegNumber(reg_numbers.pop())
+           #print(self.electric_cars[i].__dict__)
+           
         for i in range(20):
            self.petrol_cars.append(PetrolCar())
+           self.petrol_cars[i].setColour(colours.pop())
+           self.petrol_cars[i].setMake(makes.pop())
+           self.petrol_cars[i].setMake(engine_sizes.pop())
+           self.petrol_cars[i].setRegNumber(reg_numbers.pop())
+
         for i in range(10):
            self.diesel_cars.append(DieselCar())
         for i in range(4):
            self.hybrid_cars.append(HybridCar())
-
+            
     def stock_count(self):
         print('petrol cars in stock '+ str(len(self.petrol_cars)))
         print('electric cars in stock ' + str(len(self.electric_cars)))
