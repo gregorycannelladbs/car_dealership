@@ -18,11 +18,11 @@ class Dealership(object):
         self.rented_hybrid_cars = []
 
     def create_current_stock(self):
-        colours = ['blue', 'white', 'red', 'black', 'green'] * 8
-        makes = ['Jaguar', 'lamborghini', 'Ferrari', 'mustang'] * 8
+        colours = ['blue', 'white', 'red', 'black', 'orange'] * 8
+        makes = ['jaguar', 'lamborghini', 'ferrari', 'mustang', 'maserati'] * 8
         engine_sizes = [3, 3.5, 4, 4.5, 4.7] * 8
         reg_numbers = [''.join(random.choices(string.ascii_uppercase + string.digits, k=8)) for i in range(40)]
-        numer_cylinders = [6, 8] * 9
+        number_cylinders = [6, 8] * 17
 
         for i in range(6):
            self.electric_cars.append(ElectricCar())
@@ -38,11 +38,23 @@ class Dealership(object):
            self.petrol_cars[i].setMake(makes.pop())
            self.petrol_cars[i].setMake(engine_sizes.pop())
            self.petrol_cars[i].setRegNumber(reg_numbers.pop())
+           self.petrol_cars[i].setNumberCylinders(number_cylinders.pop())
 
         for i in range(10):
            self.diesel_cars.append(DieselCar())
+           self.diesel_cars[i].setColour(colours.pop())
+           self.diesel_cars[i].setMake(makes.pop())
+           self.diesel_cars[i].setMake(engine_sizes.pop())
+           self.diesel_cars[i].setRegNumber(reg_numbers.pop())
+           self.diesel_cars[i].setNumberCylinders(number_cylinders.pop())
+
         for i in range(4):
            self.hybrid_cars.append(HybridCar())
+           self.hybrid_cars[i].setColour(colours.pop())
+           self.hybrid_cars[i].setMake(makes.pop())
+           self.hybrid_cars[i].setMake(engine_sizes.pop())
+           self.hybrid_cars[i].setRegNumber(reg_numbers.pop())
+           self.hybrid_cars[i].setNumberCylinders(number_cylinders.pop())
             
     def stock_count(self):
         print('petrol cars in stock '+ str(len(self.petrol_cars)))
