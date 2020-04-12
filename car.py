@@ -70,6 +70,10 @@ class ElectricCar(Car):
 
     def setNumberFuelCells(self, value):
         self.__numberFuelCells = value
+    
+    def setCarType(self, value):
+        self.__car_type = value
+
 
 class PetrolCar(Car):
 
@@ -86,6 +90,9 @@ class PetrolCar(Car):
 
     def setNumberCylinders(self, value):
         self.__numberCylinders = value
+    
+    def setCarType(self, value):
+        self.__car_type = value
 
 class DieselCar(Car):
 
@@ -102,6 +109,9 @@ class DieselCar(Car):
 
     def setNumberCylinders(self, value):
         self.__numberCylinders = value
+    
+    def setCarType(self, value):
+        self.__car_type = value
         
 class HybridCar(Car):
     
@@ -125,3 +135,6 @@ class HybridCar(Car):
 
     def setNumberCylinders(self, value):
         self.__numberCylinders = value
+    
+    def setCarType(self, value):
+        self.__car_type = value
