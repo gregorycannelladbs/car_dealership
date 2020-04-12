@@ -13,10 +13,6 @@ class Dealership(object):
         self.petrol_cars = []
         self.diesel_cars = []
         self.hybrid_cars = []
-        self.rented_electric_cars = []
-        self.rented_petrol_cars = []
-        self.rented_diesel_cars = []
-        self.rented_hybrid_cars = []
 
     def create_current_stock(self):
         colours = ['blue', 'white', 'red', 'black', 'orange'] * 8
@@ -69,7 +65,6 @@ class Dealership(object):
 #        header = []
 #        keys = [value for value in car_list[0].__dict__.keys()]
 #        header.append(keys)
-        print(car_list[0].__dict__.values())
         for car in car_list:
             values = [str(value) for value in car.__dict__.values()]
             values.insert(0, str(car_list.index(car)))
@@ -81,36 +76,38 @@ class Dealership(object):
     def display_data(self, car_list):
         data = self.get_data(car_list)
         if car_list == self.electric_cars:
-            print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s}'.format('Index', 'Make', 'Colour', 'mileage', 
-                  'Engine_size', 'Status', 'Reg_number', 'Fuel_cells'))
-            
-            for i in data:
-                print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s}'.format(i[0], i[1], i[2], i[3],
-                          i[4], i[5], i[6], i[7]))
-        
-        elif car_list == self.petrol_cars or car_list == self.diesel_cars:
-            print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s}'.format('Index', 'Make', 'Colour', 'mileage', 
-                  'Engine_size', 'Status', 'Reg_number', 'Cylinders'))
-            
-            for i in data:
-                print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s}'.format(i[0], i[1], i[2], i[3],
-                          i[4], i[5], i[6], i[7]))
-                
-        elif car_list == self.hybrid_cars:
             print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s} {:<15s}'.format('Index', 'Make', 'Colour', 
-                  'mileage', 'Engine_size', 'Status', 'Reg_number', 'Fuel_cells', 'Cylinders'))
-                
+                  'mileage', 'Engine_size', 'Status', 'Reg_number', 'Fuel_cells', 'Car_type'))
+            
             for i in data:
                 print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s} {:<15s}'.format(i[0], i[1], i[2], i[3],
-                      i[4], i[5], i[6], i[7], i[8]))
+                          i[4], i[5], i[6], i[7], i[8]))
+        
+        elif car_list == self.petrol_cars or car_list == self.diesel_cars:
+            print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s} {:<15s}'.format('Index', 'Make', 'Colour', 
+                  'mileage', 'Engine_size', 'Status', 'Reg_number', 'Cylinders', 'Car_type'))
+            
+            for i in data:
+                print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s} {:<15s}'.format(i[0], i[1], i[2], i[3],
+                          i[4], i[5], i[6], i[7], i[8]))
+                
+        elif car_list == self.hybrid_cars:
+            print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s} {:<15s} {:<15s}'.format('Index', 'Make', 
+                  'Colour', 'mileage', 'Engine_size', 'Status', 'Reg_number', 'Fuel_cells', 'Cylinders', 'Car_type'))
+                
+            for i in data:
+                print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s} {:<15s} {:<15s}'.format(i[0], i[1], i[2], 
+                      i[3], i[4], i[5], i[6], i[7], i[8], i[9]))
     
-    def change_status(self, car_list, status):
-        answer = eval(input('Enter the index of the car you want to rent: '))
-        car_list[answer].setStatus(status)
+    def change_status(self, car_list, status, index): 
+        car_list[index].setStatus(status)
+        
+    def change_mileage(self, car_list, mileage, index):
+        car_list[index].setMileage(mileage)
         
     def chose_car_list(self):
 #        answer = input('would you like to rent "r" or return "b" a car? r/b ')
-        car_type = input('what type would you like to rent? p/e/d/h ')
+        car_type = input('\nWhat type would you like to rent? p/e/d/h ')
 
         if car_type == 'e':
             return self.electric_cars
@@ -126,30 +123,54 @@ class Dealership(object):
 
     def main():
         dealership = Dealership()
-        answer = input('Do you want start from scratch "1", or load previously saved data "2"? ')
+        answer = input('\nDo you want to start from scratch "1", or load previously saved data "2"? ')                    
         if answer == '1':
             dealership.create_current_stock()
+            eletric_cars_list = dealership.get_data(dealership.electric_cars)
+            petrol_cars_list = dealership.get_data(dealership.petrol_cars)
+            diesel_cars_list = dealership.get_data(dealership.diesel_cars)
+            hybrid_cars_list = dealership.get_data(dealership.hybrid_cars)
+            file_names = ['electric', 'petrol', 'diesel', 'hybrid']
+            index = 0
+            for i in (eletric_cars_list, petrol_cars_list, diesel_cars_list, hybrid_cars_list):
+                file_name = file_names[index] + '_cars.csv'
+                index += 1
+                with open(file_name, "w", newline="",  encoding='utf-8') as f:
+                    writer = csv.writer(f)
+                    writer.writerows(i)
+                    f.close()
+                    
         else:
             pass
         proceed = 'y'
         while proceed == 'y':
-            answer = input('would you like to rent "r" or return "b" a car? r/b ')
+            answer = input('\nWould you like to rent "r" or return "b" a car? ')
             if answer == 'r':
                 status = 'rented'
+                car_list = dealership.chose_car_list()
+                dealership.display_data(car_list)
+                index = eval(input('\nEnter the index of the car you want to rent: '))
+                dealership.change_status(car_list, status, index)
+            
             else:
                 status = 'in stock'
-            car_list = dealership.chose_car_list()
-            dealership.display_data(car_list)
-            dealership.change_status(car_list, status)
-            proceed = input('continue? y/n ')
+                mileage = eval(input('\nWhat is the mileage of the car on return? '))
+                car_list = dealership.chose_car_list()
+                dealership.display_data(car_list)
+                index = eval(input('\nEnter the index of the car you want to return: '))
+                dealership.change_status(car_list, status, index)
+                dealership.change_mileage(car_list, mileage, index) 
             
-        data = dealership.get_data(car_list)
-        answer = input('would you like to save changes made? y/n ')
-        if answer == 'y':
-            with open("output.csv", "w", newline="",  encoding='utf-8') as f:
-                writer = csv.writer(f)
-                writer.writerows(data)
-                f.close()
-
+            answer = input('\nWould you like to save changes made? y/n ')
+            if answer == 'y':
+                data = dealership.get_data(car_list)
+                file_name = car_list[0].getCarType() + '_cars.csv'
+                with open(file_name, "w", newline="",  encoding='utf-8') as f:
+                    writer = csv.writer(f)
+                    writer.writerows(data)
+                    f.close()
+            
+            proceed = input('\nWould you like to continue y/n? ')
+            
 if __name__ == '__main__':
    Dealership.main()
