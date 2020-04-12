@@ -31,7 +31,6 @@ class Dealership(object):
            self.electric_cars[i].setMake(makes.pop())
            self.electric_cars[i].setEngineSize(engine_sizes.pop())
            self.electric_cars[i].setRegNumber(reg_numbers.pop())
-           #print(self.electric_cars[i].__dict__)
            
         for i in range(20):
            self.petrol_cars.append(PetrolCar())
@@ -64,147 +63,87 @@ class Dealership(object):
     def rented_cars(self, car_list):
         rented_cars = [car for car in car_list if car.getStatus() == 'rented']
         return len(rented_cars)
-    
-#        stock_petrol_cars = [car for car in self.petrol_cars if car.getStatus() == 'in stock']
-#        stock_diesel_cars = [car for car in self.diesel_cars if car.getStatus() == 'in stock']
-#        stock_hybrid_cars = [car for car in self.hybrid_cars if car.getStatus() == 'in stock']
-#        
-#        print('electric cars in stock '+ str(len(stock_electric_cars)))
-#        print('petrol cars in stock '+ str(len(stock_petrol_cars)))
-#        print('diesel cars in stock '+ str(len(stock_diesel_cars)))
-#        print('hybrid cars in stock '+ str(len(stock_hybrid_cars)))
 
-#        print('make', 'colour', 'engine_size', 'number_of_cylinders', 'reg_number')
-#        for car in stock_electric_cars:
-#            print(car.getMake(), car.getColour(), car.getNumberFuelCells(), car.getEngineSize(), car.getRegNumber())
-#            
-
-        
-        
-#        print('petrol cars in stock '+ str(len(self.petrol_cars)))
-#        print('electric cars in stock ' + str(len(self.electric_cars)))
-#        print('Diesel cars in stock ' + str(len(self.diesel_cars)))
-#        print('Hybrid cars in stock ' + str(len(self.hybrid_cars)))
-#        print('rented petrol cars ' + str(len(self.rented_petrol_cars)))
-#        print('rented electric cars ' + str(len(self.rented_electric_cars)))
-#        print('rented diesel cars ' + str(len(self.rented_diesel_cars)))
-#        print('rented hybrid cars ' + str(len(self.rented_hybrid_cars)))
-
-    def rent(self, car_list):      
+    def get_data(self, car_list):      
         data = []
-        header = []
-        keys = [value for value in car_list[0].__dict__.keys()]
-        header.append(keys)
-        for car in self.in_stock(car_list):
+#        header = []
+#        keys = [value for value in car_list[0].__dict__.keys()]
+#        header.append(keys)
+        print(car_list[0].__dict__.values())
+        for car in car_list:
             values = [str(value) for value in car.__dict__.values()]
             values.insert(0, str(car_list.index(car)))
             data.append(values)
         data = np.array(data)
         data = data[np.argsort(data[:, 1])]
-
+        return data
+        
+    def display_data(self, car_list):
+        data = self.get_data(car_list)
         if car_list == self.electric_cars:
-            for i in header:
-                print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s}'.format('Index', 'Make', 'Colour', 'mileage', 
-                      'Engine_size', 'Status', 'Reg_number', 'Fuel_cells'))
+            print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s}'.format('Index', 'Make', 'Colour', 'mileage', 
+                  'Engine_size', 'Status', 'Reg_number', 'Fuel_cells'))
             
             for i in data:
                 print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s}'.format(i[0], i[1], i[2], i[3],
                           i[4], i[5], i[6], i[7]))
         
-        elif car_list == self.petrol_cars or self.diesel_cars:
-            for i in header:
-                print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s}'.format('Index', 'Make', 'Colour', 'mileage', 
-                      'Engine_size', 'Status', 'Reg_number', 'Cylinders'))
+        elif car_list == self.petrol_cars or car_list == self.diesel_cars:
+            print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s}'.format('Index', 'Make', 'Colour', 'mileage', 
+                  'Engine_size', 'Status', 'Reg_number', 'Cylinders'))
             
             for i in data:
                 print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s}'.format(i[0], i[1], i[2], i[3],
                           i[4], i[5], i[6], i[7]))
                 
-        elif len(data[0]) == self.hybrid_cars:
-            for i in header:
-                print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s} {:<15s}'.format('Index', 'Make', 'Colour', 
-                      'mileage', 'Engine_size', 'Status', 'Reg_number', 'Fuel_cells', 'Cylinders'))
+        elif car_list == self.hybrid_cars:
+            print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s} {:<15s}'.format('Index', 'Make', 'Colour', 
+                  'mileage', 'Engine_size', 'Status', 'Reg_number', 'Fuel_cells', 'Cylinders'))
                 
             for i in data:
-                print('{:<15s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s} {:<15s}'.format(i[0], i[1], i[2], i[3],
+                print('{:<10s} {:<15s} {:<10s} {:<10s} {:<15s} {:<15s} {:<15s} {:<15s} {:<15s}'.format(i[0], i[1], i[2], i[3],
                       i[4], i[5], i[6], i[7], i[8]))
-                
-#            print('\n',  car_list.index(car), end=' ')
-#            for value in car.__dict__.values():
-#                print(value, end=' ')
-#                    print(car_list.index(car), car.__dict__.values())
+    
+    def change_status(self, car_list, status):
         answer = eval(input('Enter the index of the car you want to rent: '))
-        car_list[answer].setStatus('rented')
-        print(len(self.in_stock(car_list)))
-#    else:
-#        print('Only' + str(len(self.in_stock(car_list))) + 'in stock.')
-     
-    def return_car(self, car_list, number):
-        data = []
-        header = []
-        keys = [value for value in car_list[0].__dict__.keys()]
-        header.append(keys)
-        for car in self.rented_cars(car_list):
-            print(car_list.index(car), car.getMake(), 
-                  car.getColour(), car.getNumberFuelCells(), car.getEngineSize(), car.getRegNumber())
-        answer = eval(input('type the index of the car you want to return: '))
-        car_list[answer].setStatus('in stock')
-        print(len(self.rented_cars(car_list)))
-#        else:
-#            print('Too many car returned. Only' + str(len(self.in_stock(car_list))) + 'currently rented')
-           
-    def process_rental(self):
-        answer = input('would you like to rent "r" or return "b" a car? r/b ')
-        if answer == 'r':
-            answer = input('what type would you like to rent? p/e/d/h ')
-            if answer == 'e':
-                self.rent(self.electric_cars)
-            
-            elif answer == 'p':
-                self.rent(self.petrol_cars)
-            
-            elif answer == 'd':
-                self.rent(self.diesel_cars)
-            
-            else:
-                self.rent(self.hybrid_cars) 
+        car_list[answer].setStatus(status)
+        
+    def chose_car_list(self):
+#        answer = input('would you like to rent "r" or return "b" a car? r/b ')
+        car_type = input('what type would you like to rent? p/e/d/h ')
+
+        if car_type == 'e':
+            return self.electric_cars
+        
+        elif car_type == 'p':
+            return self.petrol_cars
+        
+        elif car_type == 'd':
+            return self.diesel_cars
         
         else:
-            answer = input('what type would you like to return ? p/e/d/h ')
-            if answer == 'e':
-                self.return_car(self.rented_electric_cars)
-            elif answer == 'p':
-                self.return_car(self.rented_petrol_cars)
-                
-            elif answer == 'd':
-                self.return_car(self.rented_diesel_cars)
-            else:
-                self.return_car(self.rented_hybrid_cars)
-        
-#        print("")
-#        self.stock_count()
-        
-    def get_rental_status(self):
-        rental_status = [
-                ['electric_cars', len(self.electric_cars)],
-                ['petrol_cars', len(self.petrol_cars)], 
-                ['diesel_cars', len(self.diesel_cars)],
-                ['hybrid_cars', len(self.hybrid_cars)], 
-                ['rented_electric_cars', len(self.rented_electric_cars)], 
-                ['rented_petrol_cars', len(self.rented_petrol_cars)],
-                ['rented_diesel_cars', len(self.rented_diesel_cars)], 
-                ['rented_hybrid_cars', len(self.rented_hybrid_cars)]
-                ]
-        return rental_status
-        
+            return self.hybrid_cars 
+
     def main():
         dealership = Dealership()
-        dealership.create_current_stock()
+        answer = input('Do you want start from scratch "1", or load previously saved data "2"? ')
+        if answer == '1':
+            dealership.create_current_stock()
+        else:
+            pass
         proceed = 'y'
         while proceed == 'y':
-            dealership.process_rental()
+            answer = input('would you like to rent "r" or return "b" a car? r/b ')
+            if answer == 'r':
+                status = 'rented'
+            else:
+                status = 'in stock'
+            car_list = dealership.chose_car_list()
+            dealership.display_data(car_list)
+            dealership.change_status(car_list, status)
             proceed = input('continue? y/n ')
-        data = dealership.get_rental_status()
+            
+        data = dealership.get_data(car_list)
         answer = input('would you like to save changes made? y/n ')
         if answer == 'y':
             with open("output.csv", "w", newline="",  encoding='utf-8') as f:
