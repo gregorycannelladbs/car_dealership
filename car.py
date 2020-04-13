@@ -1,7 +1,7 @@
 # Define a class for my car
 
 class Car(object):
-    # implement the car object.
+    # implement the car object.#
     
     def __init__(self):
         self.__make = ''
