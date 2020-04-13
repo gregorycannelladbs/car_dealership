@@ -226,15 +226,15 @@ class Dealership(object):
                 mileage = eval(input('\nWhat is the mileage of the car on return? '))
                 dealership.change_mileage(car_list, mileage, index) 
             
-                answer = input('\nWould you like to save changes made? y/n ')
-                if answer == 'y':
-                    data = dealership.get_data(car_list)
-                    data = [item[1:] for item in data]
-                    file_name = car_list[0].getCarType() + '_cars.csv'
-                    with open(file_name, "w", newline="",  encoding='utf-8') as f:
-                        writer = csv.writer(f)
-                        writer.writerows(data)
-                        f.close()
+            answer = input('\nWould you like to save changes made? y/n ')
+            if answer == 'y':
+                data = dealership.get_data(car_list)
+                data = [item[1:] for item in data]
+                file_name = car_list[0].getCarType() + '_cars.csv'
+                with open(file_name, "w", newline="",  encoding='utf-8') as f:
+                    writer = csv.writer(f)
+                    writer.writerows(data)
+                    f.close()
             
             proceed = input('\nWould you like to continue y/n? ')
                            
